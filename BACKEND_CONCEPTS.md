@@ -15,4 +15,32 @@
 
 ## 3.Proxy Configuration in Frontend
 ### How does this proxy setting work, and what problems does it solve in the development environment?
-- 
+- Have code:
+export default defineConfig({
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:4000",
+        changeOrigin: true,
+      },
+    },
+  },
+});
+- How does this proxy setting work?
+When the React frontend makes a request to /api/..., Vite intercepts it.
+
+Instead of sending the request directly to the frontend server, Vite forwards it to the backend server running at http://localhost:4000.
+
+The option changeOrigin: true ensures that the request headers are updated so the backend sees the request as if it came directly to its own origin.
+
+This means frontend code can simply call /api/jobs without needing to hardcode the backend URL.
+
+- What problems does it solve in the development environment?
+Avoids CORS issues: Normally, the browser blocks requests between different ports (5173 for frontend and 4000 for backend). The proxy makes it look like the request is coming from the same origin, bypassing this restriction.
+
+Cleaner frontend code: Developers don’t need to write full backend URLs like http://localhost:4000/api/jobs. Instead, they can just use /api/jobs.
+
+Consistency: Makes switching between development and production easier. In production, the frontend and backend are often served from the same domain, so using /api works seamlessly.
+
+Developer convenience: Simplifies testing and reduces configuration headaches during local development.
+
