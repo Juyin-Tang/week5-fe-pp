@@ -1,12 +1,31 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+
+
+const apiUrl = 'http://localhost:3000/api/jobs';
+
+
 
 const JobPage = () => {
   const { id } = useParams();
   const [job, setJob] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/${id}`);
+        const data = await response.json();
+        console.log("Job by ID:", data);
+        setJob(data);
+      }catch (err) {
+        console.error("Failed to fetch", err);
+      }
+      };
+       fetchJobs();
+  });
   const deleteJob = async () => {
+    
     console.log(JobPage);
   };
 
