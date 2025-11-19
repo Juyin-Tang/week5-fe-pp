@@ -15,6 +15,18 @@
 
 ## 3.Proxy Configuration in Frontend
 ### How does this proxy setting work, and what problems does it solve in the development environment?
+Have code:  
+```js
+export default defineConfig({
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:4000",
+        changeOrigin: true,
+      },
+    },
+  },
+});
 
 - How does this proxy setting work?
 When the React frontend makes a request to /api/..., Vite intercepts it.
