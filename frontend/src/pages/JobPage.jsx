@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 
 
-const apiUrl = 'http://localhost:3000/api/jobs';
+const apiUrl = 'http://localhost:4000/api/jobs';
 
 
 
@@ -18,20 +18,35 @@ const JobPage = () => {
         const data = await response.json();
         console.log("Job by ID:", data);
         setJob(data);
-      }catch (err) {
+      } catch (err) {
         console.error("Failed to fetch", err);
       }
-      };
-       fetchJobs();
+    };
+    fetchJobs();
   });
-  const deleteJob = async () => {
-    
-    console.log(JobPage);
-  };
 
+  
+  const deleteJob = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/${id}`,{
+        method:"DELETE",
+      });
+      
+      if (response.ok) {
+        console.log("Deleting successfully");
+        navigate("/");
+      } else {
+        console.error("Failed to delete job");
+      }
+
+    } catch (error) {
+      console.error("Error deleteing job:", error);
+    }
+  };
   if (!job) {
     return <div>Loading...</div>;
   }
+
 
   return (
     <div className="job-details">
