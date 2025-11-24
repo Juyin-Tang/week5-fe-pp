@@ -16,16 +16,16 @@ const AddJobPage = () => {
 
   const navigate = useNavigate();
 
-  const submitForm = async (e) => {
+ const submitForm = async (e) => {
   e.preventDefault();
   console.log("AddJobPage");
 
   const job = {
     title,
     type,
-    location,
-    description,
-    salary: Number(salary),
+    description,   
+    location,      
+    salary,        
     company: {
       name: companyName,
       contactEmail,
@@ -46,7 +46,7 @@ const AddJobPage = () => {
 
     if (!response.ok) {
       console.error("Failed to add job", json);
-      return; // 
+      return;
     }
 
     setTitle("");
