@@ -36,7 +36,7 @@ const EditJobPage = () => {
         setLocation(data.location);
         setSalary(data.salary);
       } catch (error) {
-        console.log("Error fetching data", error);
+        console.error("Error fetching data", error);
       }
     };
     fetchJob();
@@ -71,7 +71,7 @@ const EditJobPage = () => {
       }
       navigate(`/jobs/${id}`);
     } catch (error) {
-      console.log("Error updating job", error);
+      console.error("Error updating job", error);
     }
   };
 
