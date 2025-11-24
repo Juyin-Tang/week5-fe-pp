@@ -7,11 +7,10 @@ const Home = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const fetchJobs = async () => {
       try {
-        const response = await fetch(apiUrl, { signal: controller.signal });
+        const response = await fetch(apiUrl); 
+
         if (!response || !response.ok) {
           console.error("Failed to fetch. Status:", response && response.status);
           setJobs([]);
@@ -22,14 +21,12 @@ const Home = () => {
         setJobs(Array.isArray(data) ? data : []);
         console.log("All Jobs:", data);
       } catch (err) {
-        if (err.name === "AbortError") return;
         console.error("Failed to fetch", err);
         setJobs([]);
       }
     };
 
     fetchJobs();
-    return () => controller.abort();
   }, []);
 
   return (
